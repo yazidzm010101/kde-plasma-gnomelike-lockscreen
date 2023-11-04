@@ -221,6 +221,7 @@ PlasmaCore.ColorScope {
             state: lockScreenRoot.uiVisible ? "on" : "off"
             source: wallpaper
             mainStack: mainStack
+            mainBlock: mainBlock
             footer: footer
             clock: clock
         }
@@ -229,7 +230,8 @@ PlasmaCore.ColorScope {
             id: clockShadow
             anchors.fill: clock
             source: clock
-            visible: !softwareRendering
+            // visible: !softwareRendering
+            visible: false
             radius: 6
             samples: 14
             spread: 0.3
@@ -247,7 +249,7 @@ PlasmaCore.ColorScope {
             property Item shadow: clockShadow
             visible: y > 0
             anchors.horizontalCenter: parent.horizontalCenter
-            y: (mainBlock.userList.y + mainStack.y)/2 - height/2
+            // y: (mainBlock.userList.y + mainStack.y)/2 - height/2
             Layout.alignment: Qt.AlignBaseline
         }
 

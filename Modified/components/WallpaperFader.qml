@@ -17,6 +17,7 @@ Item {
     id: wallpaperFader
     property Item clock
     property Item mainStack
+    property Item mainBlock
     property Item footer
     property alias source: wallpaperBlur.source
     state: lockScreenRoot.uiVisible ? "on" : "off"
@@ -102,13 +103,21 @@ Item {
                 target: wallpaperFader
                 factor: 1
             }
+            // PropertyChanges {
+            //     target: clock.shadow
+            //     opacity: 0
+            // }
             PropertyChanges {
-                target: clock.shadow
+                target: clock
                 opacity: 0
             }
             PropertyChanges {
                 target: clock
-                opacity: 1
+                y: ((mainBlock.height)/2 - height) - 200
+            }
+            PropertyChanges {
+                target: clock
+                scale: 0.5
             }
         },
         State {
@@ -123,15 +132,27 @@ Item {
             }
             PropertyChanges {
                 target: wallpaperFader
-                factor: 0
+                factor: 1
             }
+            // PropertyChanges {
+            //     target: clock.shadow
+            //     opacity: wallpaperFader.alwaysShowClock ? 1 : 0
+            // }
             PropertyChanges {
-                target: clock.shadow
-                opacity: wallpaperFader.alwaysShowClock ? 1 : 0
+                target: clock
+                opacity: 1
             }
             PropertyChanges {
                 target: clock
-                opacity: wallpaperFader.alwaysShowClock ? 1 : 0
+                y: (mainBlock.height / 2) - height
+            }
+            PropertyChanges {
+                target: mainBlock
+                y: 200
+            }
+            PropertyChanges {
+                target: mainBlock
+                scale: 0.5
             }
         }
     ]
@@ -141,8 +162,8 @@ Item {
             to: "on"
             //Note: can't use animators as they don't play well with parallelanimations
             NumberAnimation {
-                targets: [mainStack, footer, clock]
-                property: "opacity"
+                targets: [mainStack, footer, clock, mainBlock]
+                properties: "opacity,y,scale"
                 duration: PlasmaCore.Units.veryLongDuration
                 easing.type: Easing.InOutQuad
             }
@@ -151,8 +172,8 @@ Item {
             from: "on"
             to: "off"
             NumberAnimation {
-                targets: [mainStack, footer, clock]
-                property: "opacity"
+                targets: [mainStack, footer, clock, mainBlock]
+                properties: "opacity,y,scale"
                 duration: PlasmaCore.Units.veryLongDuration
                 easing.type: Easing.InOutQuad
             }
